@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mistral Web Interface</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 600px;
+            margin-top: 50px;
+            background: #1e1e1e;
+            padding: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+        #prompt {
+            background-color: #2b2b2b;
+            color: #e0e0e0;
+            resize: none;
+            font-size: 1rem;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .btn-custom {
+            background-color: #6200ea;
+            color: #fff;
+            transition: background-color 0.3s ease;
+            border: none;
+            font-weight: bold;
+        }
+        .btn-custom:hover {
+            background-color: #3700b3;
+        }
+        h1 {
+            font-size: 1.8rem;
+            color: #bb86fc;
+            text-align: center;
+        }
+        h2 {
+            font-size: 1.4rem;
+            color: #bb86fc;
+            margin-top: 20px;
+        }
+        #response {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            background: #2b2b2b;
+            color: #e0e0e0;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-family: monospace;
+        }
+    </style>
+    <script>
+        async function sendQuery() {
+            const prompt = document.getElementById('prompt').value;
+            const response = await fetch('/query', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ prompt })
+            });
+            const data = await response.json();
+            document.getElementById('response').innerText = data.response;
+        }
+    </script>
+</head>
+<body>
+
+<div class="container">
+    <h1>Mistral Web Interface</h1>
+    <div class="form-group mb-3">
+        <textarea id="prompt" class="form-control" rows="4" placeholder="INPUT TEXT Mistral"></textarea>
+    </div>
+    <div class="d-grid gap-2">
+        <button onclick="sendQuery()" class="btn btn-custom btn-lg">SEND</button>
+    </div>
+    <h2 class="mt-4">О Mistral:</h2>
+    <div id="response"></div>
+</div>
+
+<!-- Bootstrap JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
